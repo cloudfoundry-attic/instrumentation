@@ -2,8 +2,8 @@
 
 APP_NAME=instr-response-time
 
-# cf target api.$CF_INSTR_TARGET
-# cf login $CF_INSTR_USER --password $CF_INSTR_PASSWORD --org $CF_INSTR_ORG --space $CF_INSTR_SPACE
+cf target api.$CF_INSTR_TARGET
+cf login $CF_INSTR_USER --password $CF_INSTR_PASSWORD --org $CF_INSTR_ORG --space $CF_INSTR_SPACE
 
 INSTR_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
