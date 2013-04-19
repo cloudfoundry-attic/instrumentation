@@ -36,6 +36,8 @@ set multiplot
 EOF
 
 for instances in $INSTANCES; do
+  cf scale --instances $instances $APP_NAME
+  cf restart $APP_NAME # so that we know all the instances are ready
   ab -v 3 -n $NUM_REQUESTS -c $CONCURRENCY -e response_time_with_headers_${instances}.csv $APP_URL
 
   # gnuplot will barf if there's a header
