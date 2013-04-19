@@ -18,16 +18,12 @@ APP_URL="http://${APP_NAME}.${CF_INSTR_TARGET}/?response_size=${RESPONSE_SIZE}"
 
 NUM_REQUESTS=${CF_INSTR_NUM_REQUESTS:-3000}
 CONCURRENCY=${CF_INSTR_CONCURRENCY:-100}
+INSTANCES=${CF_INSTR_INSTANCES:-"1 2 4 8"}
 
 READY_WAIT=${CF_INSTR_READY_WAIT:-10}
 sleep $READY_WAIT
 
-ab -v 3 -n $NUM_REQUESTS -c $CONCURRENCY -e response_time_with_headers.csv $APP_URL
-
-# gnuplot will barf if there's a header
-tail -n +2 response_time_with_headers.csv > response_time.csv
-
-gnuplot <<EOF
+cat > response_time.gnuplot <<EOF
 set terminal png
 set output 'response_time.png'
 set datafile separator ','
@@ -36,7 +32,20 @@ set title "Response Time Distribution\\n($NUM_REQUESTS total requests, $CONCURRE
 set xlabel "Percentile"
 set ylabel "Response Time (ms)"
 
-plot 'response_time.csv' title '1 instance' with lines
+set multiplot
 EOF
+
+for instances in $INSTANCES; do
+  ab -v 3 -n $NUM_REQUESTS -c $CONCURRENCY -e response_time_with_headers_${instances}.csv $APP_URL
+
+  # gnuplot will barf if there's a header
+  tail -n +2 response_time_with_headers_${instances}.csv > response_time_${instances}.csv
+
+  echo "plot 'response_time_${instances}.csv' title '${instances} instances' with lines" >> response_time.gnuplot
+done
+
+echo 'unset multiplot' >> response_time.gnuplot
+
+gnuplot response_time.gnuplot
 
 cf delete $APP_NAME -f
