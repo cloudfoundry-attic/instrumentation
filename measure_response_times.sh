@@ -11,7 +11,7 @@ cf login $CF_INSTR_USER --password $CF_INSTR_PASSWORD --org $CF_INSTR_ORG --spac
 
 INSTR_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# cf push --path $INSTR_DIR/apps/sinatra-instrumentation --name $APP_NAME -f
+cf push --memory 1G --path $INSTR_DIR/apps/sinatra-instrumentation --name $APP_NAME -f
 
 RESPONSE_SIZE=${CF_INSTR_RESPONSE_SIZE:-1048576}
 APP_URL="http://${APP_NAME}.${CF_INSTR_TARGET}/?response_size=${RESPONSE_SIZE}"
@@ -32,11 +32,11 @@ set terminal png
 set output 'response_time.png'
 set datafile separator ','
 
-set title "Response Time Distribution ($NUM_REQUESTS total requests, $CONCURRENCY concurrent connections)"
+set title "Response Time Distribution ($NUM_REQUESTS total requests, $CONCURRENCY concurrent connections, $RESPONSE_SIZE byte response)"
 set xlabel "Percentile"
 set ylabel "Response Time (ms)"
 
 plot 'response_time.csv' title '1 instance' with lines
 EOF
 
-# cf delete $APP_NAME -f
+cf delete $APP_NAME -f
