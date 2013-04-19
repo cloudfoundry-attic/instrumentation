@@ -26,6 +26,16 @@ ab -n $NUM_REQUESTS -c $CONCURRENCY -e response_time_with_headers.csv $APP_URL
 # gnuplot will barf if there's a header
 tail -n +2 response_time_with_headers.csv > response_time.csv
 
-gnuplot -e "set terminal png; set output 'response_time.png'; set datafile separator ','; plot 'response_time.csv' with lines"
+gnuplot <<EOF
+set terminal png
+set output 'response_time.png'
+set datafile separator ','
+
+set title "Response Time Distribution ($NUM_REQUESTS total requests, $CONCURRENCY concurrent connections)"
+set xlabel "Percentile"
+set ylabel "Response Time (ms)"
+
+plot 'response_time.csv' title '1 instance' with lines
+EOF
 
 cf delete $APP_NAME -f
