@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [[ -n "$DEBUG" ]]; then
+  set -x
+fi
+
 APP_NAME=instr-response-time
 
 cf target api.$CF_INSTR_TARGET
