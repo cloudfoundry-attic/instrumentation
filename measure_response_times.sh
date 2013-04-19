@@ -11,7 +11,7 @@ cf login $CF_INSTR_USER --password $CF_INSTR_PASSWORD --org $CF_INSTR_ORG --spac
 
 INSTR_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-cf push --path $INSTR_DIR/apps/sinatra-instrumentation --name $APP_NAME -f
+# cf push --path $INSTR_DIR/apps/sinatra-instrumentation --name $APP_NAME -f
 
 RESPONSE_SIZE=${CF_INSTR_RESPONSE_SIZE:-1048576}
 APP_URL="http://${APP_NAME}.${CF_INSTR_TARGET}/?response_size=${RESPONSE_SIZE}"
