@@ -25,7 +25,7 @@ set terminal png size 1024,768
 set output 'response_time.png'
 set datafile separator ','
 
-set title "Response Time Distribution\\n($NUM_REQUESTS total requests, $CONCURRENCY concurrent connections, $RESPONSE_SIZE byte response)"
+set title "Response Time Distribution on ${CF_INSTR_TARGET}\\n($NUM_REQUESTS total requests, $CONCURRENCY concurrent connections, $RESPONSE_SIZE byte response)"
 set xlabel "Percentile"
 set ylabel "Response Time (ms)"
 set key left top
