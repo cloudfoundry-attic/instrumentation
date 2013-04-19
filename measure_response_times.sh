@@ -14,6 +14,9 @@ APP_URL="http://${APP_NAME}.${CF_INSTR_TARGET}/?response_size=1048576"
 NUM_REQUESTS=3000
 CONCURRENCY=100
 
+READY_WAIT=${CF_INSTR_READY_WAIT:-10}
+sleep $READY_WAIT
+
 ab -n $NUM_REQUESTS -c $CONCURRENCY -e response_time_with_headers.csv $APP_URL
 
 # gnuplot will barf if there's a header
