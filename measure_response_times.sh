@@ -13,7 +13,8 @@ INSTR_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cf push --path $INSTR_DIR/apps/sinatra-instrumentation --name $APP_NAME -f
 
-APP_URL="http://${APP_NAME}.${CF_INSTR_TARGET}/?response_size=1048576"
+RESPONSE_SIZE=${CF_INSTR_RESPONSE_SIZE:-1048576}
+APP_URL="http://${APP_NAME}.${CF_INSTR_TARGET}/?response_size=${RESPONSE_SIZE}"
 
 NUM_REQUESTS=${CF_INSTR_NUM_REQUESTS:-3000}
 CONCURRENCY=${CF_INSTR_CONCURRENCY:-100}
