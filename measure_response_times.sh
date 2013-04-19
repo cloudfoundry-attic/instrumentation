@@ -21,13 +21,14 @@ CONCURRENCY=${CF_INSTR_CONCURRENCY:-100}
 INSTANCES=${CF_INSTR_INSTANCES:-"1 2 4 8"}
 
 cat > response_time.gnuplot <<EOF
-set terminal png
+set terminal png size 1024,768
 set output 'response_time.png'
 set datafile separator ','
 
 set title "Response Time Distribution\\n($NUM_REQUESTS total requests, $CONCURRENCY concurrent connections, $RESPONSE_SIZE byte response)"
 set xlabel "Percentile"
 set ylabel "Response Time (ms)"
+set key left top
 
 plot \\
 EOF
