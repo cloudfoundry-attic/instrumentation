@@ -31,8 +31,6 @@ set datafile separator ','
 set title "Response Time Distribution\\n($NUM_REQUESTS total requests, $CONCURRENCY concurrent connections, $RESPONSE_SIZE byte response)"
 set xlabel "Percentile"
 set ylabel "Response Time (ms)"
-
-set multiplot
 EOF
 
 for instances in $INSTANCES; do
@@ -45,8 +43,6 @@ for instances in $INSTANCES; do
 
   echo "plot 'response_time_${instances}.csv' title '${instances} instances' with lines" >> response_time.gnuplot
 done
-
-echo 'unset multiplot' >> response_time.gnuplot
 
 gnuplot response_time.gnuplot
 
