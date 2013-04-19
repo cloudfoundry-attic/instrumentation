@@ -29,6 +29,7 @@ set title "Response Time Distribution on ${CF_INSTR_TARGET}\\n($NUM_REQUESTS tot
 set xlabel "Percentile"
 set ylabel "Response Time (ms)"
 set key left top
+set logscale y
 
 plot \\
 EOF
