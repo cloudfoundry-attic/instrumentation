@@ -20,9 +20,6 @@ NUM_REQUESTS=${CF_INSTR_NUM_REQUESTS:-3000}
 CONCURRENCY=${CF_INSTR_CONCURRENCY:-100}
 INSTANCES=${CF_INSTR_INSTANCES:-"1 2 4 8"}
 
-READY_WAIT=${CF_INSTR_READY_WAIT:-10}
-sleep $READY_WAIT
-
 cat > response_time.gnuplot <<EOF
 set terminal png
 set output 'response_time.png'
