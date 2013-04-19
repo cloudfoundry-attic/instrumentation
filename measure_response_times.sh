@@ -39,4 +39,4 @@ set ylabel "Response Time (ms)"
 plot 'response_time.csv' title '1 instance' with lines
 EOF
 
-cf delete $APP_NAME -f
+# cf delete $APP_NAME -f
