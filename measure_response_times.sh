@@ -31,6 +31,8 @@ set datafile separator ','
 set title "Response Time Distribution\\n($NUM_REQUESTS total requests, $CONCURRENCY concurrent connections, $RESPONSE_SIZE byte response)"
 set xlabel "Percentile"
 set ylabel "Response Time (ms)"
+
+plot \\
 EOF
 
 for instances in $INSTANCES; do
@@ -41,8 +43,11 @@ for instances in $INSTANCES; do
   # gnuplot will barf if there's a header
   tail -n +2 response_time_with_headers_${instances}.csv > response_time_${instances}.csv
 
-  echo "plot 'response_time_${instances}.csv' title '${instances} instances' with lines" >> response_time.gnuplot
+  echo "'response_time_${instances}.csv' title '${instances} instances' with lines, \\" >> response_time.gnuplot
 done
+
+# remove that trailing comma from the end of the plot commands
+sed -i -e '$ s/,.*$//g' response_time.gnuplot
 
 gnuplot response_time.gnuplot
 
