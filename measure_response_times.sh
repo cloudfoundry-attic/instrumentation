@@ -22,7 +22,7 @@ CONCURRENCY=${CF_INSTR_CONCURRENCY:-100}
 READY_WAIT=${CF_INSTR_READY_WAIT:-10}
 sleep $READY_WAIT
 
-ab -v 4 -n $NUM_REQUESTS -c $CONCURRENCY -e response_time_with_headers.csv $APP_URL
+ab -v 3 -n $NUM_REQUESTS -c $CONCURRENCY -e response_time_with_headers.csv $APP_URL
 
 # gnuplot will barf if there's a header
 tail -n +2 response_time_with_headers.csv > response_time.csv
