@@ -37,10 +37,10 @@ EOF
 for instances in $INSTANCES; do
   cf scale --instances $instances $APP_NAME
   cf restart $APP_NAME # so that we know all the instances are ready
-  ab -v 1 -n $NUM_REQUESTS -c $CONCURRENCY -e response_time_with_headers_${instances}.csv $APP_URL
+  ab -v 1 -n $NUM_REQUESTS -c $CONCURRENCY -e headers_and_response_time_${instances}.csv $APP_URL
 
   # gnuplot will barf if there's a header
-  tail -n +2 response_time_with_headers_${instances}.csv > response_time_${instances}.csv
+  tail -n +2 headers_and_response_time_${instances}.csv > response_time_${instances}.csv
 
   echo "'response_time_${instances}.csv' title '${instances} instances' with lines, \\" >> response_time.gnuplot
 done
